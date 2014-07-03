@@ -19,8 +19,8 @@ function PageSpeedMonitor() {
 	};
 
 	this.scoreUrls = function(urlArray) {
-		pagespeedController.scoreUrls(urlArray, function(eventName, data) {
-			this.emit(eventName, data);
+		pagespeedController.scoreUrls(urlArray, function(eventName, url, type, data) {
+			this.emit(eventName, url, type, data);
 		}.bind(this));
 	};
 };
