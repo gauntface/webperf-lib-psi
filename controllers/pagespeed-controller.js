@@ -23,9 +23,7 @@ function getPSIScrores(index, urlsArray, options, cb) {
 
 	pagespeed(options, function(err, data){
 		var response = JSON.parse(data);
-	    //console.log(response);
-	    console.log('index = '+index);
-	    cb('onResult', data);
+	    cb('onResult', 'psi', data);
 
 	    getPSIScrores(index+1, urlsArray, options, cb);
 	});
