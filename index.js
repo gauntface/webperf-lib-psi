@@ -10,7 +10,7 @@ function PageSpeedMonitor() {
 	this.crawlSitemap = function(url) {
 		sitemapCrawler.performCrawl(url, function(err, urlArray){
 			if(err) {
-				emitter.emit('onError', err);
+				this.emit('onError', 'Unable to fetch and parse the sitemap: '+JSON.stringify(err));
 				return;
 			}
 

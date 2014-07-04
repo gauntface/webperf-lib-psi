@@ -3,7 +3,6 @@ var pagespeed = require('gpagespeed');
 exports.scoreUrls = function(urlsArray, cb) {
 	var options = {
 	    // key: '...', optional
-	    url: 'http://html5rocks.com',
 	    paths: '',           // optional
 	    locale: 'en_GB',     // optional
 	    strategy: 'mobile',  // optional
@@ -15,13 +14,19 @@ exports.scoreUrls = function(urlsArray, cb) {
 
 function getPSIScrores(index, urlsArray, options, cb) {
 	if(index >= urlsArray.length) {
-		cb(null);
+		cb('onCompleted');
 		return;
 	}
 
 	options.url = urlsArray[index];
 
 	pagespeed(options, function(err, data){
+		if(err) {
+			cb('onError', 'There was an error while running PageSpeed '+
+				'Insights against '+options.url+': '+JSON.stringify(err));
+			return;
+		}
+
 		var response = JSON.parse(data);
 		
 	    cb('onResult', urlsArray[index], 'psi', response);

@@ -1,4 +1,3 @@
-var http = require('http');
 var xmlStream = require('xml-stream');
 
 exports.performCrawl = function(sitemapUrl, cb) {
@@ -17,8 +16,15 @@ exports.performCrawl = function(sitemapUrl, cb) {
 }
 
 function getSitemap(sitemapUrl, cb) {
+  var httpRequest;
+  if(sitemapUrl.indexOf("https") === 0) {
+    httpRequest = require("https");
+  } else {
+    httpRequest = require("http");
+  }
+
   var urls = [];
-  http.get(sitemapUrl, function(res){
+  httpRequest.get(sitemapUrl, function(res){
     var xml = new xmlStream(res);
 
     xml.on('updateElement: loc', function(loc) {
