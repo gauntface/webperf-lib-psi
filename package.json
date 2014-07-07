@@ -1,7 +1,7 @@
 {
   "name": "webperf-lib-psi",
   "description": "A simple tool which crawls a sitemap and gets a PageSpeed Insight score for each page",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "gpagespeed": "^0.0.7",
     "xml-stream": "0.4.4"
