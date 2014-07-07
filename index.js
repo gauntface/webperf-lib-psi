@@ -8,7 +8,7 @@ function PSILib() {
 	EventEmitter.call(this);
 
 	this.crawlSitemap = function(url) {
-		sitemapCrawler.performCrawl(url, function(err, urlArray){
+		sitemapCrawler.performCrawl(url, function(err, urlArray) {
 			if(err) {
 				this.emit('onError', 'Unable to fetch and parse the sitemap: '+JSON.stringify(err));
 				return;

@@ -1,6 +1,7 @@
 var pagespeed = require('gpagespeed');
 
 exports.scoreUrls = function(urlsArray, cb) {
+	cb = cb || function() {};
 	var options = {
 	    // key: '...', optional
 	    paths: '',           // optional
@@ -20,7 +21,7 @@ function getPSIScrores(index, urlsArray, options, cb) {
 
 	options.url = urlsArray[index];
 
-	pagespeed(options, function(err, data){
+	pagespeed(options, function(err, data) {
 		if(err) {
 			cb('onError', 'There was an error while running PageSpeed '+
 				'Insights against '+options.url+': '+JSON.stringify(err));
