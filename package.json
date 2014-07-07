@@ -21,7 +21,7 @@
     "PageSpeed",
     "Insights"
   ],
-  "author": "Matt Gaunt <matt.t.gaunt@gmail.com> (https://gauntface.com/)",
+  "author": "Matt Gaunt <matt@gauntface.co.uk> (https://gauntface.com/)",
   "license": "Apache",
   "bugs": {
     "url": "https://github.com/gauntface/webperf-lib-psi/issues"

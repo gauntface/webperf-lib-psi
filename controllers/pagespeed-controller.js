@@ -1,7 +1,8 @@
 var pagespeed = require('gpagespeed');
 
-exports.scoreUrls = function(urlsArray, cb) {
+exports.scoreUrls = function(urlsArray, cb, timeout) {
 	cb = cb || function() {};
+	timeout = timeout || 500;
 	var options = {
 	    // key: '...', optional
 	    paths: '',           // optional
@@ -10,13 +11,24 @@ exports.scoreUrls = function(urlsArray, cb) {
 	    threshold: 80        // optional
 	};
 	options.nokey = options.key === void 0;
-	getPSIScrores(0, urlsArray, options, cb);
+	getPSIScrores(0, urlsArray, options, new Date().getTime(), cb);
 }
 
-function getPSIScrores(index, urlsArray, options, cb) {
+function getPSIScrores(index, urlsArray, options, prevQueryTime, cb) {
 	if(index >= urlsArray.length) {
 		cb('onCompleted');
 		return;
+	}
+	
+	if(options.nokey) {
+		// This is to make sure we aren't hitting any rate limits
+		var workTime = new Date().getTime() - prevQueryTime;
+		if(workTime < 500) {
+			setTimeout(function () {
+			    getPSIScrores(index, urlsArray, options, prevQueryTime, cb);
+			  }, 500 - workTime);
+			return;
+		}
 	}
 
 	options.url = urlsArray[index];
@@ -32,6 +44,7 @@ function getPSIScrores(index, urlsArray, options, cb) {
 		
 	    cb('onResult', urlsArray[index], 'psi', response);
 
-	    getPSIScrores(index+1, urlsArray, options, cb);
+	    prevQueryTime = new Date().getTime();
+	    getPSIScrores(index+1, urlsArray, options, prevQueryTime, cb);
 	});
 }
