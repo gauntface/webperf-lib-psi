@@ -4,7 +4,7 @@ var sitemapCrawler = require('./crawlers/sitemap-crawler');
 var pagespeedController = require('./controllers/pagespeed-controller');
 var EventEmitter = require('events').EventEmitter;
 
-function PageSpeedMonitor() {
+function PSILib() {
 	EventEmitter.call(this);
 
 	this.crawlSitemap = function(url) {
@@ -25,6 +25,6 @@ function PageSpeedMonitor() {
 	};
 };
 
-PageSpeedMonitor.prototype.__proto__ = EventEmitter.prototype;
+PSILib.prototype.__proto__ = EventEmitter.prototype;
 
-module.exports = new PageSpeedMonitor();
+module.exports = new PSILib();
