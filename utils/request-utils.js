@@ -13,30 +13,28 @@ exports.ensureValidRequest = function(req, res, requiredParams) {
 
         this.respondWithError(
             ErrorCodes.required_param_missing,
-            req.url+" requires the "+missingStrings+" parameter to be included with the request",
+            req.url + " requires the " + missingStrings + " parameter to be included with the request",
             400,
             res);
 
         return false;
     }
     return true;
-}
+};
 
 exports.respondWithError = function(errorCode, errorMsg, statusCode, res) {
-    var response = {
+    sendRequest({
         error: {
             code: errorCode,
             msg: errorMsg
         }
-    };
-    sendRequest(response, statusCode, res);  
+    }, statusCode, res);  
 };
 
 exports.respondWithData = function(data, res) {
-    var response = {
+    sendRequest({
         data: data
-    };
-    sendRequest(response, 200, res);  
+    }, 200, res);  
 };
 
 function sendRequest(response, statusCode, res) {
