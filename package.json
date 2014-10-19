@@ -4,7 +4,7 @@
   "version": "0.0.3",
   "dependencies": {
     "gpagespeed": "^0.0.7",
-    "xml-stream": "0.4.4"
+    "xml-stream": "^0.4.5"
   },
   "devDependencies": {},
   "main": "index.js",
