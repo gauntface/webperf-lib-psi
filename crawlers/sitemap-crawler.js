@@ -1,11 +1,13 @@
+'use strict';
+
 var xmlStream = require('xml-stream');
 
 exports.performCrawl = function(sitemapUrl, cb) {
-  console.log('Received sitemap url: '+sitemapUrl);
+  console.log('Received sitemap url: ' + sitemapUrl);
   cb = cb || function() {};
 
   getSitemap(sitemapUrl, function(err, urls) {
-    if(err) {
+    if (err) {
       cb(err);
       return;
     }
@@ -18,10 +20,10 @@ function getSitemap(sitemapUrl, cb) {
   cb = cb || function() {};
 
   var httpRequest;
-  if(sitemapUrl.indexOf("https") === 0) {
-    httpRequest = require("https");
+  if (sitemapUrl.indexOf('https') === 0) {
+    httpRequest = require('https');
   } else {
-    httpRequest = require("http");
+    httpRequest = require('http');
   }
 
   var urls = [];
