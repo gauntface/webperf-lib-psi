@@ -9,9 +9,9 @@ exports.scoreUrls = function(urlsArray, cb, timeout) {
     // key: '...', optional
     paths: '',           // optional
     locale: 'en_GB',     // optional
-		strategy: 'mobile',  // optional
-		threshold: 80        // optional
-	};
+    strategy: 'mobile',  // optional
+    threshold: 80        // optional
+  };
   options.nokey = options.key === void 0;
   getPSIScrores(0, urlsArray, options, new Date().getTime(), cb);
 };
@@ -41,9 +41,7 @@ function getPSIScrores(index, urlsArray, options, prevQueryTime, cb) {
         'Insights against ' + options.url + ': ' + JSON.stringify(err));
       return;
     }
-
-    var response = JSON.parse(data);
-    cb('onResult', urlsArray[index], 'psi', response);
+    cb('onResult', urlsArray[index], 'psi', data);
 
     prevQueryTime = new Date().getTime();
     getPSIScrores(index + 1, urlsArray, options, prevQueryTime, cb);

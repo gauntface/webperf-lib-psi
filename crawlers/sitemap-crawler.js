@@ -1,6 +1,6 @@
 'use strict';
 
-var xmlStream = require('xml-stream');
+var parseString = require('xml2js').parseString;
 
 exports.performCrawl = function(sitemapUrl, cb) {
   console.log('Received sitemap url: ' + sitemapUrl);
@@ -28,18 +28,24 @@ function getSitemap(sitemapUrl, cb) {
 
   var urls = [];
   httpRequest.get(sitemapUrl, function(res) {
-    var xml = new xmlStream(res);
-
-    xml.on('updateElement: loc', function(loc) {
-      // Change <title> child to a new value, composed of its previous value
-      // and the value of <pubDate> child.
-      urls.push(loc.$text);
+    var xmlString = '';
+    res.on('data', function(d) {
+      xmlString += d;
     });
 
-    xml.on('end', function() {
-      cb(null, urls);
-    });
-
+    res.on('end', function() {
+        try {
+          parseString(xmlString, function(err, result) {
+            var xmlUrls = result.urlset.url;
+            for (var i = 0; i < xmlUrls.length; i++) {
+              urls.push(xmlUrls[i].loc[0]);
+            }
+            cb(null, urls);
+          });
+        } catch (exception) {
+          cb('Unable to get locations: ' + JSON.stringify(exception));
+        }
+      }.bind(this));
   }).on('error', function(e) {
     cb(e, null);
   });
